@@ -49,4 +49,4 @@ jobs:
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.TWINE_TOKEN }}
-          TWINE_REPOSITORY: pypi
+
