@@ -9,9 +9,7 @@ import onnxruntime
 
 from .utils.onnx import convert_to_onnx
 from .utils.io import _load
-from .utils.functions import (
-    crop_img, parse_roi_box_from_bbox, parse_roi_box_from_landmark,
-)
+from .utils.functions import (crop_img, parse_roi_box_from_bbox, parse_roi_box_from_landmark,)
 from .utils.tddfa_util import _parse_param, similar_transform
 from .bfm.bfm import BFMModel
 from .bfm.bfm_onnx import convert_bfm_to_onnx
