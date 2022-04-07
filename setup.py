@@ -21,17 +21,15 @@ setup(
     url="https://github.com/pypa/sampleproject",
     #project_urls={
         #"Bug Tracker": "https://github.com/pypa/sampleproject/issues",
-    #},
-    classifiers=[
+        classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         ],
-               data_files=[
-
+        data_files=[
         'src/threedfa/configs/BFM_UV.mat',
+        'src/threedfa/configs/indices.npy',
         "src/threedfa/Sim3DR/lib/rasterize.h"
-        
         ],
         ext_modules=[         
                             Extension(name="threedfa.Sim3DR.Sim3DR_Cython",

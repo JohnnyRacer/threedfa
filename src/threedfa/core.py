@@ -57,10 +57,9 @@ class FileHandler: #Utilies to take care of pathing and the aquisition of necess
     def setup_dlfiles(replace_existing:bool=True):
 
         coalesce_bool = lambda in_iterable : np.multiply.reduce(np.array(in_iterable).astype('int'))
-        base_abs =  str(abs_cfg_path).split('/configs')[:-1][0]
         bool_chk = FileHandler.file_chk()
         if not bool(coalesce_bool([coalesce_bool(el) for el in bool_chk])):
-            fdl_list = [[FileHandler.gd_dlfile(FileHandler.file_ids[i][idx], os.path.join(base_abs, os.path.join(FileHandler.base_internal_paths[i], FileHandler.required_files[i][idx]) ) ) for idx in range(len(ems)) if ems[idx] == False ] for i, ems in enumerate(bool_chk)]  
+            fdl_list = [[FileHandler.gd_dlfile(FileHandler.file_ids[i][idx], os.path.join(abs_cfg_path, os.path.join(FileHandler.base_internal_paths[i], FileHandler.required_files[i][idx]) ) ) for idx in range(len(ems)) if ems[idx] == False ] for i, ems in enumerate(bool_chk)]  
             print(fdl_list)
             print(f"Downloaded {len(fdl_list)} files " )
     

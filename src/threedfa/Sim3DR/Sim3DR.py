@@ -2,7 +2,7 @@
 
 
 import numpy as np
-import Sim3DR_Cython
+from . import Sim3DR_Cython
 
 
 def get_normal(vertices, triangles):
