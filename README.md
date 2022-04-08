@@ -14,11 +14,13 @@
 
 - 3D facial landmarks via depth estimation and perspective reconstruction.
 
-- Supports inferencing on both ONNX runtime (CPU/GPU) as well as pyTorch.
+- Supports inferencing on both ONNX runtime (CPU/GPU) as well as Pytorch.
 
-- Capable of generating dlib landmarks (68 points), mediapipe/ARKit/Unity landmarks (468 points) or mesh landmarks (35568 points).
+- Mesh interpolation and export with textured UV map.
 
-- Mesh interpolation and export. (EXPERIMENTAL)
+- Capable of generating dlib landmarks (68 points), mesh landmarks (35568 points) or **EXPERIMENTAL**  mediapipe/ARKit/Unity landmarks (468 points) .
+
+
   
 
 ## Requirements
