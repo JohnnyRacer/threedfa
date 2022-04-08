@@ -27,8 +27,9 @@ setup(
         "Operating System :: OS Independent",
         ],
         data_files=[
-        'src/threedfa/configs/BFM_UV.mat',
-        'src/threedfa/configs/indices.npy',
+        "src/threedfa/configs/BFM_UV.mat",
+        "src/threedfa/configs/indices.npy",
+        "src/threedfa/configs/ncc_code.npy",
         "src/threedfa/Sim3DR/lib/rasterize.h"
         ],
         ext_modules=[         
