@@ -2,7 +2,6 @@
 
 ## No face left unaligned ✊✊✊
 
-
 ### A fast, accurate and easy to use all-in-one solution for facial feature extraction. 
 ### Simple and streamlined detection and alignment API with mesh capbilities and depth estimation. 
 
@@ -18,7 +17,13 @@
 
 - Mesh interpolation and export with textured UV map.
 
-- Capable of generating dlib landmarks (68 points), mesh landmarks (35568 points) or **EXPERIMENTAL**  mediapipe/ARKit/Unity landmarks (468 points) .
+- Capable of generating dlib landmarks (68 points), mesh landmarks (35568 points) or **EXPERIMENTAL**  mediapipe/ARKit/Unity landmarks (468 points).
+
+## Installation
+
+Simply run `python -m build` and then install the wheel using `pip install dist/threedfa.XXX.whl`
+
+TODOs : Building manylinux wheel for PyPi support. 
 
 ## Requirements
 
