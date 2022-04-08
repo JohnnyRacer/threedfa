@@ -20,9 +20,6 @@
 
 - Capable of generating dlib landmarks (68 points), mesh landmarks (35568 points) or **EXPERIMENTAL**  mediapipe/ARKit/Unity landmarks (468 points) .
 
-
-  
-
 ## Requirements
 
 #### Building Cython Extensions
@@ -46,7 +43,6 @@ scipy
 onnxruntime
 `
 
-
 ### Hardware
 
 #### **Inferencing on the CPU**
@@ -59,8 +55,10 @@ By default ONNX will be using the CPU for inference, GPU inference for ONNX can 
 
 #### **Inferencing on other XLA Accerlators**
 
-Untested. Although pyTorch XLA should be supported.
+Untested. Although Pytorch XLA should be supported.
 
 ### Credits
 
-Thanks to cleardusk for providing an amazing repo and codebase.
+Thanks to **cleardusk** for providing an amazing repo and codebase.
+
+Thanks to **rednafi** for `fastapi-nano`.
