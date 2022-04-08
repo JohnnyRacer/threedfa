@@ -143,4 +143,4 @@ class Instance:
     
     pose = lambda self, loaded_im, param_list, ver_list,show=False :  viz_pose(loaded_im, param_list, ver_list, show_flag=show)
 
-    ser_to_mesh = lambda self,loaded_im, ver_list, mode='obj', sv_fp=None :  ser_to_obj(loaded_im, ver_list, self.tddfa.tri, height=loaded_im.shape[0], wfp=sv_fp if sv_fp is not None else f'faceobjs_{len(ver_list)}_{time.time().__trunc__()}.obj') if mode == 'obj' else ser_to_ply(ver_list, self.tddfa.tri, height=loaded_im.shape[0],wfp=sv_fp if sv_fp is not None else f'faceply_{len(ver_list)}_{time.time().__trunc__()}.obj')
+    ser_to_mesh = lambda self,loaded_im, ver_list, mode='obj', sv_fp=None :  ser_to_obj(loaded_im, ver_list, self.tddfa.tri, height=loaded_im.shape[0], wfp=sv_fp if sv_fp is not None else f'faceobjs_{len(ver_list)}_{time.time().__trunc__()}.obj') if mode == 'obj' else ser_to_ply(ver_list, self.tddfa.tri, height=loaded_im.shape[0],wfp=sv_fp if sv_fp is not None else f'faceobjs_{len(ver_list)}_{time.time().__trunc__()}.ply')

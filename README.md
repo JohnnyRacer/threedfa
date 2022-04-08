@@ -15,7 +15,7 @@
 
 - Supports inferencing on both ONNX runtime (CPU/GPU) as well as Pytorch.
 
-- Mesh interpolation and export with textured UV map.
+- Mesh interpolation and export with textured UV map in both `.obj` or **EXPERIMENTAL** `.ply` .
 
 - Capable of generating dlib landmarks (68 points), mesh landmarks (35568 points) or **EXPERIMENTAL**  mediapipe/ARKit/Unity landmarks (468 points).
 
@@ -76,6 +76,14 @@ pip install onnxruntime-gpu==1.8.0
 #### **Inferencing on other XLA Accerlators**
 
 Untested. Although Pytorch XLA should be supported.
+
+### Known bugs / problems / TODOs
+
+- Textured .obj files needs to implemented.
+- Exporting to .ply is currently broken, I tried adapting the demo code from the source but had no luck in getting it to work.
+- Partly obscured faces, particularly of the jaw will typically yield incorrectly aligned landmarks.
+- Not a problem per se, but ONNX runtime on nvidia GPUs will require CUDA 11.0 and libCUDNN 8.0+. GPU Inference on AMD or Intel GPUs is not tested as I do not have access to such hardware. Please open an issue if you can verify and help test on these platforms.
+- 
 
 ### Credits
 
