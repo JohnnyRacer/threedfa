@@ -3,7 +3,7 @@
 ## No face left unaligned ✊✊✊
 
 ### A fast, accurate and easy to use all-in-one solution for facial feature extraction. 
-### Simple and streamlined detection and alignment API with mesh capbilities and depth estimation. 
+### Simple and streamlined detection and alignment API with mesh generation and depth estimation. 
 
 ### Code was adapted from cleardusk's 3DDFA_V2 : https://github.com/cleardusk/3DDFA_V2
 
@@ -21,9 +21,19 @@
 
 ## Installation
 
-Simply run `python -m build` and then install the wheel using `pip install dist/threedfa.XXX.whl`
+### From Source :
 
-TODOs : Building manylinux wheel for PyPi support. 
+- Clone this git repo by running `git clone https://github.com/JohnnyRacer/threedfa`
+
+- Install requirements by running `pip install -r requirements.txt`
+
+- Wait for the wheels to be built for your platform.
+
+- Run `python -m build` and then install the wheel using `pip install dist/threedfa.XXX.whl`
+
+### From PyPi via pip:
+
+- TODO : Building manylinux wheel for PyPi support. 
 
 ## Requirements
 
@@ -52,11 +62,16 @@ onnxruntime
 
 #### **Inferencing on the CPU**
 
-A relative newer x86-64 CPU with decent floating point performance, with AVX preferable if using ONNX runtime on CPU. Most CPUs made after 2014 should give very satisfactory performance, with inference times of between 2-5 seconds for a 2K image. This code base has not been tested at all with ARM based CPUs, so compatibility and speeds are unknown. Please submit a PR if you are willing to share code or results related to ARM CPUs.
+A relative new x86-64 CPU with decent floating point performance, with AVX support is preferable if using ONNX runtime on CPU. Most CPUs made after 2014 should give very satisfactory performance, with inference times of < 2 seconds for a 2K image. This code base has not been tested at all with ARM based CPUs, so compatibility and speeds are unknown. Please submit a PR if you are willing to share code or results related to ARM CPUs.
 
 #### **Inferencing on the GPU**
 
 By default ONNX will be using the CPU for inference, GPU inference for ONNX can be enabled by uninstalling the `onnxruntime` package from pip and replacing it with `onnxruntime-gpu`. Please do note that the highest supported version of ONNX runtime is 1.8.0 for GPU inference. This is due to how ONNX has changed its providers allocation option parsing internally.
+
+```
+pip uninstall -y onnxruntime;
+pip install onnxruntime-gpu==1.8.0
+```
 
 #### **Inferencing on other XLA Accerlators**
 
@@ -64,6 +79,6 @@ Untested. Although Pytorch XLA should be supported.
 
 ### Credits
 
-Thanks to **cleardusk** for providing an amazing repo and codebase.
+Thanks to **cleardusk** for providing an amazing repo and codebase for `3DDFA V2` .
 
 Thanks to **rednafi** for `fastapi-nano`.

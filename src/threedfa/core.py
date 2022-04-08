@@ -19,9 +19,10 @@ from skimage import io as skio
 import gdown #Change this to using requests to get files from a CDN or FTP server if Drive stops hosting files for whatever reason.
 from hashlib import md5
 import numpy as np
+import time
 
-os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
-os.environ['OMP_NUM_THREADS'] = '4'
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'True' # So ONNX and numpy operations won't have strange compute errors.
+os.environ['OMP_NUM_THREADS'] = '4' # ... ^
 
 from .FaceBoxes.FaceBoxes_ONNX import FaceBoxes_ONNX
 from .TDDFA_ONNX import TDDFA_ONNX
@@ -78,7 +79,6 @@ class ImgUtils:
 
 class FaceUtils:
     
-
     bbox_shape = lambda bbox :np.abs(np.array([bbox[2]-bbox[0], bbox[3]-bbox[1]]).astype('int'))
 
     ret_lmpts = lambda in_pts, lm_type='2d' : [(int(round(in_pts[0, i])), int(round(in_pts[1, i]))) if lm_type == '2d' else (int(round(in_pts[0, i])), int(round(in_pts[1, i])), int(round(in_pts[2, i]))) for i in range(in_pts.shape[1])   ]
@@ -124,24 +124,23 @@ class Instance:
     
     detect_face = lambda self, loaded_im, filter_score=0.85, trunc_score=True : [e[:-1] if trunc_score else e for e in self.face_boxes(loaded_im) if e[-1] >= filter_score] #Detects human faces and returns the bounding box with the score as the last element
 
-    detect_lms = lambda self, loaded_im, in_bboxes,ret_dense=False : self.tddfa.recon_vers(*self.tddfa(loaded_im, in_bboxes) , dense_flag=ret_dense)
+    detect_lms = lambda self, loaded_im, in_bboxes,ret_dense=False, lm_type='2d' :  FaceUtils.ret_lmpts(self.tddfa.recon_vers(*self.tddfa(loaded_im, in_bboxes) , dense_flag=ret_dense), lm_type=lm_type)
 
     vlist = lambda self, loaded_im, in_bboxes,ret_dense=False : self.tddfa.recon_vers(*self.tddfa(loaded_im, in_bboxes) , dense_flag=ret_dense)
-
-    
 
     def overlay(self, loaded_im : np.ndarray, vert_list : list,mode='pncc',show=False, alpha=0.6, with_bg=True):
         
         if mode == 'base':
-            overlay = render(loaded_im, vert_list, self.tddfa.tri, alpha=alpha, show_flag=show)
+            ovly_func = render
         elif mode == 'depth':
-            overlay = depth(loaded_im, vert_list, self.tddfa.tri, show_flag=show,with_bg_flag=with_bg)
+            ovly_func = depth
         elif mode == 'pncc':
-            overlay = pncc(loaded_im, vert_list, self.tddfa.tri, show_flag=show,with_bg_flag=with_bg)
+            ovly_func = pncc
         elif mode == 'uvtex':
-            overlay = uv_tex(loaded_im, vert_list, self.tddfa.tri, show_flag=show)
+            ovly_func = uv_tex
+        overlay = ovly_func(loaded_im, vert_list, self.tddfa.tri, show_flag=show)
         return overlay
     
     pose = lambda self, loaded_im, param_list, ver_list,show=False :  viz_pose(loaded_im, param_list, ver_list, show_flag=show)
 
-    ser_to_mesh = lambda self,loaded_im, ver_list, mode='obj' :  ser_to_obj(loaded_im, ver_list, self.tddfa.tri, height=loaded_im.shape[0]) if mode == 'obj' else ser_to_ply(ver_list, self.tddfa.tri, height=loaded_im.shape[0])
+    ser_to_mesh = lambda self,loaded_im, ver_list, mode='obj', sv_fp=None :  ser_to_obj(loaded_im, ver_list, self.tddfa.tri, height=loaded_im.shape[0], wfp=sv_fp if sv_fp is not None else f'faceobjs_{len(ver_list)}_{time.time().__trunc__()}.obj') if mode == 'obj' else ser_to_ply(ver_list, self.tddfa.tri, height=loaded_im.shape[0],wfp=sv_fp if sv_fp is not None else f'faceply_{len(ver_list)}_{time.time().__trunc__()}.obj')
