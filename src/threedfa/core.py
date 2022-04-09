@@ -55,6 +55,8 @@ class FileHandler: #Utilies to take care of pathing and the aquisition of necess
 
     file_chk = lambda : [[os.path.isfile(os.path.join(rdir , efp)) for efp in (FileHandler.required_files[i]) ] for i, rdir in enumerate([ os.path.join(abs_module_path, e) for e in FileHandler.base_internal_paths ]) ]
 
+    file_hash_verf = lambda : [[ FileHandler.hash_verify(os.path.join(os.path.join(abs_module_path,bfp),ffp)) for ffp in FileHandler.required_files[i] ] for i, bfp in enumerate(FileHandler.base_internal_paths) ]
+
     def setup_dlfiles(replace_existing:bool=True):
 
         coalesce_bool = lambda in_iterable : np.multiply.reduce(np.array(in_iterable).astype('int'))
@@ -130,7 +132,7 @@ class Instance:
         self.tddfa = TDDFA_ONNX(**self.cfg)
         self.face_boxes = FaceBoxes_ONNX()
     
-    detect_face = lambda self, loaded_im, filter_score=0.85, trunc_score=True : [e[:-1] if trunc_score else e for e in self.face_boxes(loaded_im) if e[-1] >= filter_score] #Detects human faces and returns the bounding box with the score as the last element
+    detect_face = lambda self, loaded_im, filter_score=0.85, trunc_score=True : [e[:-1] if trunc_score else e for e in self.face_boxes(loaded_im[..., ::-1]) if e[-1] >= filter_score] #Detects human faces and returns the bounding box with the score as the last element
 
     detect_lms = lambda self, loaded_im, in_bboxes,ret_dense=False, lm_type='2d' :  FaceUtils.ret_lmpts(self.tddfa.recon_vers(*self.tddfa(loaded_im, in_bboxes) , dense_flag=ret_dense), lm_type=lm_type)
 
