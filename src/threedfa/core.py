@@ -28,8 +28,8 @@ from .FaceBoxes.FaceBoxes_ONNX import FaceBoxes_ONNX
 from .TDDFA_ONNX import TDDFA_ONNX
 import numpy as np
 
-abs_cfg_path = str(Path(configs.__file__).parent.resolve()).split('/configs')[:-1][0] #We'll use the empty configs module's file attribute to determine the absolute path of our module.
-CFG_FILEPATH = f'{abs_cfg_path}/configs/default_120x120.yml'
+abs_module_path = str(Path(configs.__file__).parent.resolve()).split('/configs')[:-1][0] #We'll use the empty configs module's file attribute to determine the absolute path of our module.
+CFG_FILEPATH = f'{abs_module_path}/configs/default_120x120.yml'
 
 class FileHandler: #Utilies to take care of pathing and the aquisition of necessary files.
 
@@ -41,7 +41,7 @@ class FileHandler: #Utilies to take care of pathing and the aquisition of necess
 
     file_hashes = [['fbb4bec8aeff07bbe034d9cd174256b5', 'b01fc91ed6f5c6b2600b51d4040f0aaa', '14bf6688c7a099ca0ac6efa784663687', 'a9e3b48c325ee719e18b4463605a65e0'],['9e3ca4bdba2cd0e01c8bf9ee4af99f09', '5a11ce627337a9c92a98c1f98dced869', '05000fb422a8ce4a6dff7bf2618e6fc7', 'c327e57b27e159abb4c0c258c1253a4e'], ['29a0018584a22991f119aaa078a462fc', '33a70f92febea5447667c073d4a7283f'] ]
 
-    base_config = lambda rdir=abs_cfg_path ,arch='mobilenet',mdl_type="mb05_120x120" :  {'arch': arch, 'widen_factor': 0.5, 'checkpoint_fp': f'{rdir}/weights/{mdl_type}.pth', 'bfm_fp': f'{rdir}/configs/bfm_noneck_v3.pkl', 'size': 120, 'num_params': 62}
+    base_config = lambda rdir=abs_module_path ,arch='mobilenet',mdl_type="mb05_120x120" :  {'arch': arch, 'widen_factor': 0.5, 'checkpoint_fp': f'{rdir}/weights/{mdl_type}.pth', 'bfm_fp': f'{rdir}/configs/bfm_noneck_v3.pkl', 'size': 120, 'num_params': 62}
 
     gd_dlfile = lambda file_id,fp_output , cached_dl=False, show_progress=True: gdown.cached_download(id=file_id,output=fp_output, quiet=show_progress) if cached_dl else gdown.download(id=file_id,output=fp_output, quiet=show_progress)
 
@@ -53,14 +53,14 @@ class FileHandler: #Utilies to take care of pathing and the aquisition of necess
                 md5_hash.update(byte_block)
         return md5_hash.hexdigest()
 
-    file_chk = lambda : [[os.path.isfile(os.path.join(rdir , efp)) for efp in (FileHandler.required_files[i]) ] for i, rdir in enumerate([ os.path.join(abs_cfg_path, e) for e in FileHandler.base_internal_paths ]) ]
+    file_chk = lambda : [[os.path.isfile(os.path.join(rdir , efp)) for efp in (FileHandler.required_files[i]) ] for i, rdir in enumerate([ os.path.join(abs_module_path, e) for e in FileHandler.base_internal_paths ]) ]
 
     def setup_dlfiles(replace_existing:bool=True):
 
         coalesce_bool = lambda in_iterable : np.multiply.reduce(np.array(in_iterable).astype('int'))
         bool_chk = FileHandler.file_chk()
         if not bool(coalesce_bool([coalesce_bool(el) for el in bool_chk])):
-            fdl_list = [[FileHandler.gd_dlfile(FileHandler.file_ids[i][idx], os.path.join(abs_cfg_path, os.path.join(FileHandler.base_internal_paths[i], FileHandler.required_files[i][idx]) ) ) for idx in range(len(ems)) if ems[idx] == False ] for i, ems in enumerate(bool_chk)]  
+            fdl_list = [[FileHandler.gd_dlfile(FileHandler.file_ids[i][idx], os.path.join(abs_module_path, os.path.join(FileHandler.base_internal_paths[i], FileHandler.required_files[i][idx]) ) ) for idx in range(len(ems)) if ems[idx] == False ] for i, ems in enumerate(bool_chk)]  
             print(fdl_list)
             print(f"Downloaded {len(fdl_list)} files " )
     
