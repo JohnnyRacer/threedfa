@@ -32,7 +32,7 @@ jobs:
       
       - name: List wheels
         run: |
-          find . -name '*linux_x86_64*'-delete
+          find dist -name '*linux_x86_64*'-delete
           ls dist
           
 
