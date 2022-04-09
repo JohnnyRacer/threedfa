@@ -112,6 +112,20 @@ class FaceUtils:
             cv2.line(img, left_bottom, left_top, ln_color, 1, cv2.LINE_AA)
 
         return img
+    
+    def split_uv (loaded_im:np.ndarray,n_faces=0):
+        if loaded_im.shape[0] == loaded_im.shape[1] or n_faces == 0:
+            return [loaded_im]
+        offset_index = 0
+        width = np.max(loaded_im.shape[:-1] )
+        height = np.min(loaded_im.shape[:-1])
+        splitted_ims = []
+        offset_width = np.trunc(width/n_faces)
+        for i in range(0, n_faces):
+            splitted_im = loaded_im[:height,i*height:(1+i)*height ] 
+            print(i*height,(1+i)*height)
+            splitted_ims.append(splitted_im)
+        return splitted_ims
 
 class Instance:
 
