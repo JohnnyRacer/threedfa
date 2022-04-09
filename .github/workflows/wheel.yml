@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Manylinux wheel build and upload to testypi
 
 # Controls when the workflow will run
 on:
@@ -31,11 +31,12 @@ jobs:
           python-versions: 'cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39 cp310-cp310'
       
       - name: List wheels
+        # We're not going to need the linux_x86_64 wheels that are built.
         run: |
           sudo find dist -name '*linux_x86_64*' -delete
           ls dist
           
-      - name: Build and Upload to TestPyPI
+      - name: Build and Upload to TestPyPi
         run: |
           pip3 install twine
           python3 -m twine upload dist/*
@@ -43,3 +44,7 @@ jobs:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}
           TWINE_REPOSITORY: testpypi
+      - name: Test install of TestPyPi package
+        run: | 
+          pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple threedfa
+          pip show threedfa
