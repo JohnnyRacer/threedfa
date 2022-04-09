@@ -32,7 +32,7 @@ jobs:
       
       - name: List wheels
         run: |
-          find dist -name '*linux_x86_64*' -delete
+          sudo find dist -name '*linux_x86_64*' -delete
           ls dist
           
       - name: Build and Upload to TestPyPI
