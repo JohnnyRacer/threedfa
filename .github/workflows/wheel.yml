@@ -32,7 +32,8 @@ jobs:
       
       - name: List wheels
         run: |
-          find dist -name '*linux_x86_64*'-delete
+          find dist -name '*linux_x86_64*'
+          find dist -name '*linux_x86_64*'-exec rm -f {} \
           ls dist
           
 
