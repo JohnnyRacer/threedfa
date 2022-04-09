@@ -51,6 +51,6 @@ setup(
     package_dir={"": "src"},
     
     packages=setuptools.find_packages(where="src"),
-    python_requires=">=3.6",
-     install_requires = ['torch==1.11', 'torchvision==0.12.0', 'matplotlib==3.5.1', 'numpy==1.9.3', 'opencv-python==4.5.5.64', 'pyyaml==3.11', 'tqdm==4.40.2', 'cython==0.29.28', 'scikit-image==0.19.2', 'scipy==1.8.0', 'onnxruntime==1.8.0']
+    python_requires=">=3.7",
+     install_requires = ['torch>=1.11.0', 'torchvision>=0.12.0', 'matplotlib==3.5.1', 'numpy>=1.19.5', 'opencv-python>=4.5.5.64', 'pyyaml>=3.11', 'tqdm>=4.40.2', 'cython>=0.29.28', 'scikit-image>=0.19.2', 'scipy>=1.8.0', 'onnxruntime==1.8.0']
 )
