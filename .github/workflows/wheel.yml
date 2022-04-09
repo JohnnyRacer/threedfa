@@ -32,8 +32,14 @@ jobs:
       
       - name: List wheels
         run: |
-          find dist -name '*linux_x86_64*'
-          find dist -name '*linux_x86_64*'-exec rm -f {} \
+          find dist -name '*linux_x86_64*' -delete
           ls dist
           
-
+      - name: Build and Upload to TestPyPI
+        run: |
+          python3 setup.py sdist bdist_wheel
+          python3 -m twine upload dist/*
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}
+          TWINE_REPOSITORY: testpypi
