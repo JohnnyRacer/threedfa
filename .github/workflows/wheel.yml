@@ -28,8 +28,7 @@ jobs:
 
       - uses: RalfG/python-wheels-manylinux-build@v0.4.2
         with:
-          python-versions: 'cp37-cp37m cp38-cp38m cp39-cp39m'
-          build-requirements: 'cython numpy'
+          python-versions: 'cp36-cp36m cp37-cp37m'
       
       - name: List wheels
         run: ls dist
