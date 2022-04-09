@@ -32,7 +32,7 @@ jobs:
           python -m build
       
       - name: List wheels
-        run: ls 
+        run: ls dist
 
 
 
