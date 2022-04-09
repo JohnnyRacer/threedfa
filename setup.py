@@ -51,5 +51,5 @@ setup(
     
     packages=setuptools.find_packages(where="src"),
     python_requires=">=3.6",
-     install_requires = ['torch', 'torchvision', 'matplotlib', 'numpy', 'opencv-python', 'imageio-ffmpeg', 'pyyaml', 'tqdm', 'argparse', 'cython', 'scikit-image', 'scipy', 'onnxruntime', 'gradio']
+     install_requires = ['torch==1.11', 'torchvision', 'matplotlib', 'numpy', 'opencv-python', 'imageio-ffmpeg', 'pyyaml', 'tqdm', 'argparse', 'cython', 'scikit-image', 'scipy', 'onnxruntime', 'gradio']
 )
