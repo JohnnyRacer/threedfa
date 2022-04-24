@@ -10,7 +10,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="threedfa",
-    version="0.0.9",
+    version="0.0.10",
     author="JohnnyRacer",
     license='MIT',
     cmdclass={'build_ext': build_ext},
