@@ -36,15 +36,3 @@ jobs:
           sudo find dist -name '*linux_x86_64*' -delete
           ls dist
           
-      - name: Build and Upload to TestPyPi
-        run: |
-          pip3 install twine
-          python3 -m twine upload dist/*
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}
-          TWINE_REPOSITORY: testpypi
-      - name: Test install of TestPyPi package
-        run: | 
-          pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple threedfa
-          pip show threedfa
