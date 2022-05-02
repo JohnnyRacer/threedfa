@@ -39,5 +39,4 @@ jobs:
           ls dist
           pip install $(find dist -name '*cp38*')
           python tests/basic_test.py
-          python tests/iter_test.py
           
