@@ -1,5 +1,6 @@
 
 # before import, make sure FaceBoxes and Sim3DR are built successfully, e.g.,
+from json import load
 from pathlib import Path
 from re import I
 import cv2
@@ -134,7 +135,7 @@ class Instance:
     
     detect_face = lambda self, loaded_im, filter_score=0.85, trunc_score=True : [e[:-1] if trunc_score else e for e in self.face_boxes(loaded_im[..., ::-1]) if e[-1] >= filter_score] #Detects human faces and returns the bounding box with the score as the last element
 
-    detect_lms = lambda self, loaded_im, in_bboxes,ret_dense=False, lm_type='2d' :  FaceUtils.ret_lmpts(self.tddfa.recon_vers(*self.tddfa(loaded_im, in_bboxes) , dense_flag=ret_dense), lm_type=lm_type)
+    detect_lms = lambda self, loaded_im,ret_dense=False, lm_type='2d',round_int=True : [np.array(FaceUtils.ret_lmpts(vl,lm_type=lm_type),dtype='int') if round_int else vl for vl in self.vlist(loaded_im, self.detect_face(loaded_im),ret_dense=ret_dense)]
 
     vlist = lambda self, loaded_im, in_bboxes,ret_dense=False : self.tddfa.recon_vers(*self.tddfa(loaded_im, in_bboxes) , dense_flag=ret_dense)
 
