@@ -10,7 +10,7 @@ nn = Instance()
 import json
 import numpy as np
 
-
+images_url = lambda img_idx : f'https://raw.githubusercontent.com/JohnnyRacer/threedfa/citest/tests/media/test_images/{img_idx}.jpeg'
 test_types = ['base', 'depth', 'pncc', 'uvtex']
 
 hash_dict = {}
@@ -18,7 +18,7 @@ hash_dict = {}
 for test_t in test_types:
     for i in range(0,5):
         in_fp = f'./tests/media/test_images/{i+1}.jpeg'
-        loaded_img = skio.imread(in_fp)
+        loaded_img = skio.imread(images_url(i+1))
         landmarks = nn.detect_lms(loaded_img, ret_dense=True,round_int=False)
         print(f"Found {len(landmarks)} number of faces ")
         mesh = nn.overlay(loaded_img, landmarks, mode=test_t)
