@@ -25,7 +25,6 @@ jobs:
 
       # Runs a single command using the runners shell
 
-
       - uses: RalfG/python-wheels-manylinux-build@v0.4.2
         with:
           python-versions: 'cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39 cp310-cp310'
@@ -33,12 +32,12 @@ jobs:
         with:
           python-version: '3.8' # Version range or exact version of a Python version to use, using SemVer's version range syntax
           architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
-      - name: List wheels
+      - name: Cleanup and install wheel for testing
         # We're not going to need the linux_x86_64 wheels that are built.
         run: |
           sudo find dist -name '*linux_x86_64*' -delete
           ls dist
-          pip install dist/threedfa-0.0.9-cp38-cp38-manylinux_2_24_x86_64.whl
+          pip install dist/$(find dist -name '*cp38*')
           python tests/basic_test.py
 
           
