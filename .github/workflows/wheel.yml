@@ -35,6 +35,7 @@ jobs:
         run: |
           sudo find dist -name '*linux_x86_64*' -delete
           ls dist
-        run: |
           python tests/basic_test.py
+
+          
           
