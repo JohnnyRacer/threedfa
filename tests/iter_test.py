@@ -16,7 +16,7 @@ test_types = ['base', 'depth', 'pncc', 'uvtex']
 hash_dict = {}
 
 for test_t in test_types:
-    shutil.rmtree('./media/test_images/',ignore_errors=True)
+    shutil.rmtree('./media/test_results/',ignore_errors=True)
     for i in range(0,5):
         in_fp = f'./media/test_images/{i+1}.jpeg'
         loaded_img = skio.imread(in_fp)
