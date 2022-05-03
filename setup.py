@@ -28,6 +28,7 @@ setup(
         "Operating System :: OS Independent",
         ],
         data_files=[
+        "src/threedfa/.env", # For FastAPI
         "src/threedfa/configs/BFM_UV.mat",
         "src/threedfa/configs/indices.npy",
         "src/threedfa/configs/ncc_code.npy",
