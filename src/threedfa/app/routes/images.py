@@ -43,20 +43,22 @@ async def save_posted_b64img(
         raw_imhash = sha256(b64_image.encode('utf-8')).hexdigest()
         img_hash  = raw_imhash[-32:]            
         filename = f"{save_dir}/{img_hash}.{output_ext}" if save_dir is not None and os.path.isdir(save_dir)  else f'{config.IMG_CACHE_DIR}/{img_hash}.{output_ext}' 
-        ImageHandler.dump_pil(Image.open(io.BytesIO(b64.b64decode(b64_image))),img_path=filename)
-        status = 'Saved sucessfully!'
-        if not keep_image:
-            os.remove(filename)
+        
+        status = 'Recieved sucessfully!'
+        content = b64.b64decode(b64_image)
+        if keep_image:
+            ImageHandler.dump_pil(Image.open(io.BytesIO(content)),img_path=filename)
+            status = 'Saved sucessfully!'
     except Exception as exp:
         status = f'Failed to parse image due to {exp}'
         img_hash = ''
         raise HTTPException(
             status_code=HTTPStatus.BAD_REQUEST,
             detail=f"Failed to parse image due to exception : {exp} ")
-    ret_dict = {'upload_status':status,'image_size': img_chars, 'image_hash':raw_imhash, "filename":filename}
+    ret_dict = {'upload_status':status,'image_size': img_chars, 'image_hash':raw_imhash, "filename":filename,'image_bytes':content}
     return ret_dict
     
-@router.post("/upload",tags=["upload_images"], response_model=ImageUploadResponse)
+#@router.post("/upload",tags=["upload_images"], response_model=ImageUploadResponse)
 async def save_posted_binimg(
     bin_image: UploadFile = File(...),
     keep_image:bool = False,
@@ -73,8 +75,9 @@ async def save_posted_binimg(
         raw_imhash = sha256(content).hexdigest()
         img_size = len(content)
         image_bytes = ImageHandler.dump_pil(Image.open(io.BytesIO(content)))
-        status = 'Saved sucessfully!'
+        status = 'Recieved sucessfully!'
         if keep_image:
+            status = 'Saved sucessfully!'
             ImageHandler.dump_pil(Image.open(io.BytesIO(content)),img_path=filename )
             
     except Exception as exp:
