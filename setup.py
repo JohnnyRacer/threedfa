@@ -55,7 +55,7 @@ setup(
     python_requires=">=3.6",
     entry_points = {
         'console_scripts':[
-            'threedfa = fapi:main'
+            'threedfa = threedfa.fapi:main'
         ]
     },
      install_requires = ['torch>=1.11.0', 'torchvision>=0.12.0', 'matplotlib==3.5.1', 'numpy>=1.19.5', 'opencv-python', 'pyyaml>=6.0','scikit-image>=0.19.2', 'scipy>=1.8.0','cython>=0.29.28' ,'onnxruntime==1.8.0']
