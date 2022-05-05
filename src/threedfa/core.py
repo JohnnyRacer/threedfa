@@ -114,6 +114,17 @@ class FaceUtils:
             cv2.line(img, left_bottom, left_top, ln_color, 1, cv2.LINE_AA)
 
         return img
+        
+    def plot_bbox(img:np.ndarray ,bbox:list,ln_color=(255,196,128)):
+        left, top, right, bottom = np.round(bbox).astype(np.int32)
+        left_top = (left, top)
+        right_top = (right, top)
+        right_bottom = (right, bottom)
+        left_bottom = (left, bottom)
+        cv2.line(img, left_top, right_top, ln_color, 1, cv2.LINE_AA)
+        cv2.line(img, right_top, right_bottom, ln_color, 1, cv2.LINE_AA)
+        cv2.line(img, right_bottom, left_bottom, ln_color, 1, cv2.LINE_AA)
+        cv2.line(img, left_bottom, left_top, ln_color, 1, cv2.LINE_AA)
     
     def split_uv (loaded_im:np.ndarray,n_faces=0): # Helper function for splitting the raw extracted UV texture map.
         if loaded_im.shape[0] == loaded_im.shape[1] or n_faces == 0:
