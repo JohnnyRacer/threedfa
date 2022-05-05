@@ -1,5 +1,6 @@
 
 # before import, make sure FaceBoxes and Sim3DR are built successfully, e.g.,
+from json import load
 from pathlib import Path
 from re import I
 import cv2
@@ -85,21 +86,21 @@ class FaceUtils:
 
     ret_lmpts = lambda in_pts, lm_type='2d' : [(int(round(in_pts[0, i])), int(round(in_pts[1, i]))) if lm_type == '2d' else (int(round(in_pts[0, i])), int(round(in_pts[1, i])), int(round(in_pts[2, i]))) for i in range(in_pts.shape[1])   ]
 
-    def cv_draw_landmark(img : np.ndarray, pts:list, box:list=None, dot_color=(255,196,96),ln_color=(255,160,255),s_size=4, c_size=1,solid=True): #ret_plm flag enables return of 2d landmarks, the z points are truncated
+    def cv_draw_landmark(img : np.ndarray, pts:list, box:list=None, dot_color=(255,196,96),ln_color=(255,160,255),s_size=4, c_size=-1,solid=True): #ret_plm flag enables return of 2d landmarks, the z points are truncated
         n = pts.shape[1]
         if n <= 106:
             for i in range(n):
                 x = int(round(pts[0, i]))
                 y = int(round(pts[1, i]))
                 xy =  (x, y)
-                cv2.circle(img,xy, s_size, dot_color, 1, thickness=-1 if solid else 1)
+                cv2.circle(img,xy, s_size, dot_color, thickness=-1 if solid else 1)
         else:
             sep = 1
             for i in range(0, n, sep):
                 x = int(round(pts[0, i]))
                 y = int(round(pts[1, i]))
                 xy =  (x, y)
-                cv2.circle(img,xy, c_size, dot_color, 1, thickness=-1 if solid else 1)
+                cv2.circle(img,xy, c_size, dot_color, thickness=-1 if solid else 1)
 
         if box is not None:
             left, top, right, bottom = np.round(box).astype(np.int32)
@@ -133,7 +134,7 @@ class Instance:
     
     detect_face = lambda self, loaded_im, filter_score=0.85, trunc_score=True : [e[:-1] if trunc_score else e for e in self.face_boxes(loaded_im[..., ::-1]) if e[-1] >= filter_score] #Detects human faces and returns the bounding box with the score as the last element
 
-    detect_lms = lambda self, loaded_im, in_bboxes,ret_dense=False, lm_type='2d' :  FaceUtils.ret_lmpts(self.tddfa.recon_vers(*self.tddfa(loaded_im, in_bboxes) , dense_flag=ret_dense), lm_type=lm_type)
+    detect_lms = lambda self, loaded_im,ret_dense=False, lm_type='2d',round_int=True : [np.array(FaceUtils.ret_lmpts(vl,lm_type=lm_type),dtype='int') if round_int else vl for vl in self.vlist(loaded_im, self.detect_face(loaded_im),ret_dense=ret_dense)]
 
     vlist = lambda self, loaded_im, in_bboxes,ret_dense=False : self.tddfa.recon_vers(*self.tddfa(loaded_im, in_bboxes) , dense_flag=ret_dense)
 
