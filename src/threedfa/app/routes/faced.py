@@ -58,12 +58,10 @@ def resolve_lms(posted:dict,convert_to_int:bool,return_original:bool=True,size_t
     bbox = fa.detect_face(np_image)
     bbox = [[(e.astype('int') if convert_to_int else e.astype('float')).tolist() for e in bb] for bb in bbox ]
     dist = [FaceUtils.bbox_shape(bb) for bb in bbox]
-    bbox = [bb for i, bb in enumerate(bbox) if not (dist[i][0] > int(image_thresh[0]) or int(image_thresh[1]) > dist[i][1])]
-    
-    
-    print(f"bbox dists :{dist} ")
+    bbox = [bb for i, bb in enumerate(bbox) if (dist[i][0] > int(image_thresh[0]) or int(image_thresh[1]) > dist[i][1])]
+    not config.DEBUG or print(f"bbox dists :{dist} ")
     landmarks = fa.detect_lms(np_image, ret_dense=return_dense,round_int=convert_to_int)
-    landmarks = [lm.tolist() for lm in landmarks]
+    landmarks = [lm.tolist() for i, lm in enumerate(landmarks)  if (dist[i][0] > int(image_thresh[0]) or int(image_thresh[1]) > dist[i][1])]
     ret_dict = {'timestamp':time().__trunc__(), 'faces_detected':len(bbox),'bounding_boxes':bbox , 'landmarks': landmarks, 'filename':posted['filename'] }
 
     if return_original:
