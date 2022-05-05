@@ -23,7 +23,6 @@ class ImageUploadResponse(BaseModel):
     bytes_output:Optional[bytes] = None
     filename: Optional[str] = None
 
-#Union(Depends, None) =
 #@router.post("/b64upload",tags=["upload_images"],response_model=ImageUploadResponse)
 async def save_posted_b64img(
     b64_image: str = Form(...),
