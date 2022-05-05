@@ -85,22 +85,21 @@ class FaceUtils:
 
     ret_lmpts = lambda in_pts, lm_type='2d' : [(int(round(in_pts[0, i])), int(round(in_pts[1, i]))) if lm_type == '2d' else (int(round(in_pts[0, i])), int(round(in_pts[1, i])), int(round(in_pts[2, i]))) for i in range(in_pts.shape[1])   ]
 
-    def cv_draw_landmark(loaded_im : np.ndarray, pts:list, box:list=None, dot_color=(255,196,96),ln_color=(255,160,255),s_size=4, c_size=1): #ret_plm flag enables return of 2d landmarks, the z points are truncated
-        img = loaded_im.copy()
+    def cv_draw_landmark(img : np.ndarray, pts:list, box:list=None, dot_color=(255,196,96),ln_color=(255,160,255),s_size=4, c_size=1,solid=True): #ret_plm flag enables return of 2d landmarks, the z points are truncated
         n = pts.shape[1]
         if n <= 106:
             for i in range(n):
                 x = int(round(pts[0, i]))
                 y = int(round(pts[1, i]))
                 xy =  (x, y)
-                cv2.circle(img,xy, s_size, dot_color, 1)
+                cv2.circle(img,xy, s_size, dot_color, 1, thickness=-1 if solid else 1)
         else:
             sep = 1
             for i in range(0, n, sep):
                 x = int(round(pts[0, i]))
                 y = int(round(pts[1, i]))
                 xy =  (x, y)
-                cv2.circle(img,xy, c_size, dot_color, 1)
+                cv2.circle(img,xy, c_size, dot_color, 1, thickness=-1 if solid else 1)
 
         if box is not None:
             left, top, right, bottom = np.round(box).astype(np.int32)
