@@ -10,7 +10,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="threedfa",
-    version="0.0.8",
+    version="0.0.9",
     author="JohnnyRacer",
     license='MIT',
     cmdclass={'build_ext': build_ext},
@@ -52,5 +52,6 @@ setup(
     
     packages=setuptools.find_packages(where="src"),
     python_requires=">=3.6",
-     install_requires = ['torch>=1.11.0','gdown==4.4.0','torchvision>=0.12.0', 'matplotlib==3.5.1', 'numpy>=1.19.5', 'opencv-python', 'pyyaml>=6.0','scikit-image>=0.19.2', 'scipy>=1.8.0','cython>=0.29.28' ,'onnxruntime==1.8.0']
+    install_requires = ['pillow>=9.0.1' ,'gdown>=4.4.0','torch>=1.11.0', 'torchvision>=0.12.0', 'matplotlib==3.5.1', 'numpy==1.23', 'opencv-python==4.5.5.64', 'pyyaml>=6.0','scikit-image>=0.19.2', 'scipy>=1.7.1','cython>=0.29.28' ,'onnxruntime==1.8.0', "gdown>=4.4.0"]
+
 )
