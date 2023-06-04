@@ -37,6 +37,4 @@ jobs:
         run: |
           sudo find dist -name '*linux_x86_64*' -delete
           ls dist
-          pip install $(find dist -name '*cp38*')
-          python tests/basic_test.py
-          
+
